@@ -1,6 +1,6 @@
 {
   "name": "react-identification-card",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Identification Standard Card(ISO/IEC 7810) Component that written in React.",
   "main": "lib/index.js",
   "scripts": {
@@ -37,5 +37,8 @@
     "react": "0.14.7",
     "react-binding-component": "1.0.3",
     "react-dom": "0.14.7"
+  },
+  "dependencies": {
+    "react-dashed-box": "^1.0.0"
   }
 }

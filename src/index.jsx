@@ -6,7 +6,7 @@ import UIDashedBox from 'react-dashed-box';
 /**
  * @class UIIdentificationCard
  */
-export default class extends React.Component {
+export default class UIIdentificationCard extends React.Component {
   static propTypes = {
     /**
      * @property {String} className - the extend class name.

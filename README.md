@@ -4,7 +4,13 @@ Identification Standard Card(ISO/IEC 7810) Component that written in React.
 
 > ISO/IEC 7810 Identification cards — Physical characteristics is an international standard that defines the physical characteristics for identification cards.[1]
 
-Reference at [this standard](https://en.wikipedia.org/wiki/ISO/IEC_7810)
+Referenced at [this standard](https://en.wikipedia.org/wiki/ISO/IEC_7810), and this component is to implement this standard
+with the following sizes:
+
+- ID-1: 85.60 × 53.98 mm
+- ID-2: 105 × 74 mm
+- ID-3: 125 × 88 mm
+- ID-000: 25 mm × 15 mm
 
 ## Installation
 

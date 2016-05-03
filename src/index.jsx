@@ -77,9 +77,26 @@ export default class UIIdentificationCard extends React.Component {
       transition: 'all .2s ease-in-out',
       textAlign: 'left',
     },
-    path: {
-      transition: 'all .2s ease-in-out',
+    rect: {
+      borderRadius: '8px',
+      transition: 'all .2s ease-in-out'
     },
+    specular: {
+      position: 'absolute',
+      top: '0px',
+      left: '0px',
+      backgroundSize: '100% 100%',
+      borderRadius: '8px',
+      transition: 'all .2s ease-in-out',
+      WebkitMask: '-webkit-linear-gradient(top, #fff, transparent 80%)',
+      // use -webkit-filter's filter function will enable the hardware acceleration for rendering performance
+      WebkitFilter: 'opacity(0.5)',
+      background: `linear-gradient(
+        30deg,
+        rgba(255, 255, 255, .7),
+        rgba(255, 255, 255, .4) 50%,
+        rgba(255, 255, 255, 0) 50.1%) no-repeat`
+    }
   };
 
   /**
@@ -118,30 +135,6 @@ export default class UIIdentificationCard extends React.Component {
   }
 
   /**
-   * @getter {String} path
-   */
-  get path() {
-    return [
-      'M165.845472,0',
-      'L227.99565,0',
-      'C232.416331,0',
-      '236,3.57268443',
-      '236,7.99770351',
-      'L236,141.002296',
-      'C236,145.419306',
-      '232.410871,149',
-      '227.99565,149',
-      'L74.7409935,149',
-      'C81.7669784,130.92177',
-      '98.4541553,89.6860279',
-      '117.435739,54.7599123',
-      'C134.773927,22.8576428',
-      '154.983589,6.85502733',
-      '165.845472,-4.88498131e-15 Z',
-    ].join(' ');
-  }
-
-  /**
    * @constructor
    */
   constructor(props) {
@@ -149,7 +142,8 @@ export default class UIIdentificationCard extends React.Component {
     this.state = {
       fillColor: props.fillColor,
       fillOpacity: props.fillOpacity,
-      contentPosition: 0,
+      boxShadow: '0 2px 2px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 0, 0, 0.1)',
+      backgroundPosition: '0px 0px'
     };
   }
 
@@ -157,56 +151,51 @@ export default class UIIdentificationCard extends React.Component {
     this.setState({
       color: '#777777',
       fillOpacity: UIIdentificationCard.defaultProps.fillOpacity - 0.2,
-      contentPosition: 10,
+      boxShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+      backgroundPosition: '0px -30px'
     });
   }
 
   onMouseLeave() {
     this.setState({
       fillOpacity: UIIdentificationCard.defaultProps.fillOpacity,
-      contentPosition: 0,
+      boxShadow: '0 2px 2px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 0, 0, 0.1)',
+      backgroundPosition: '0px 0px'
     });
   }
 
   background() {
+    const rectStyl = Object.assign(
+      {},
+      UIIdentificationCard.styles.rect,
+      {
+        width: this.width + 'px',
+        height: this.height + 'px',
+        background: this.props.color,
+        boxShadow: this.state.boxShadow
+      });
+
+    const specularStyl = Object.assign(
+      {},
+      UIIdentificationCard.styles.specular,
+      {
+        width: this.width + 'px',
+        height: this.height + 'px',
+        backgroundPosition: this.state.backgroundPosition
+      });
+
     return (
-      <svg 
-        style={UIIdentificationCard.styles.background}
-        width={this.width} 
-        height={this.height} 
-        viewBox={this.viewBox} 
-        version="1.1" 
-        xmlns="http://www.w3.org/2000/svg">
-        <g transform="translate(-763.000000, -142.000000)">
-          <g transform="translate(150.000000, 52.000000)">
-            <g transform="translate(201.000000, 0.000000)">
-              <g transform="translate(397.000000, 10.000000)">
-                <g transform="translate(15.000000, 80.000000)">
-                  <rect fill={this.props.color} x="0" y="0" rx="8"
-                    width={this.width} 
-                    height={this.height}
-                  />
-                  <path d={this.path} 
-                    style={UIIdentificationCard.styles.path}
-                    fillOpacity={this.state.fillOpacity} 
-                    fill={this.props.fillColor}
-                  />
-                </g>
-              </g>
-            </g>
-          </g>
-        </g>
-      </svg>
+      <div className="background">
+        <div style={rectStyl}></div>
+        <div style={specularStyl}></div>
+      </div>
     );
   }
 
   metadata() {
     const styl = UIIdentificationCard.styles.metadata;
-    const metadataStyl = Object.assign({}, styl, {
-      bottom: (parseInt(styl.bottom) + this.state.contentPosition) + 'px',
-    });
     return (
-      <div style={metadataStyl}>
+      <div style={styl}>
         {this.props.viewMetadata()}
       </div>
     );
@@ -215,7 +204,7 @@ export default class UIIdentificationCard extends React.Component {
   wrap(children, props={}) {
     const style = Object.assign({
       width: this.width,
-      height: this.height,
+      height: this.height
     }, UIIdentificationCard.styles.container, props.style);
     return (
       <div
@@ -250,5 +239,4 @@ export default class UIIdentificationCard extends React.Component {
       }
     );
   }
-
 }

@@ -32,6 +32,16 @@ $ npm install react-identification-card --save
 | viewMetadata  | func    | a function to render the detail |
 | onClick       | func    | fired when clicked              |
 
+## Example
+```sh
+$ npm run example
+```
+
+The example was created from [react-hot-boilerplate](https://github.com/gaearon/react-hot-boilerplate), 
+execute the below command and open `http://localhost:8080` at browser.
+
+
+
 ## License
 
 MIT

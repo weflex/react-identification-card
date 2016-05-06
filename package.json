@@ -1,6 +1,6 @@
 {
   "name": "react-identification-card",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "Identification Standard Card(ISO/IEC 7810) Component that written in React.",
   "main": "lib/index.js",
   "scripts": {

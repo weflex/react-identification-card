@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import UIIdentificationCard from '../../src/index.jsx';
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      color: '#FF8AC2'
+    };
+  }
+
   content() {
     return (
       <p>Hello World</p>
@@ -12,34 +19,51 @@ export default class App extends Component {
     alert('click');
   }
 
+  onSetColor(color) {
+    return () => {
+      this.setState({ color });
+    }
+  }
+
   render() {
-    const colors = ['#FF8AC2', '#6ED4A4', '#283547', '#F0AB51', '#00E4FF'];
+    const colors = [
+      '#FF8AC2',
+      '#6ED4A4',
+      '#283547',
+      '#F0AB51',
+      '#00E4FF'
+    ];
     const style = {
-      ul: {
-        listStyle: 'none'
-      },
-      li: {
-        padding: '10px'
+      color: {
+        width: "30px",
+        height: "30px",
+        margin: "10px",
+        display: "inline-block",
+        borderRadius: "50%"
       }
     };
-    const cards = colors.map((color) => {
+
+    const colorRow = colors.map((color, i) => {
+      const divStyl = Object.assign({}, style.color, {
+        backgroundColor: color
+      });
       return (
-        <li style={style.li}>
-          <UIIdentificationCard
-            className="app"
-            width={236}
-            viewMetadata={this.content.bind(this)}
-            color={color}
-            isEmpty={true}
-            onClick={this.onClick.bind(this)}
-          />
-        </li>
+        <div onClick={this.onSetColor(color)} style={divStyl} key={i}></div>
       );
     });
+
     return (
-      <ul style={style.ul}>
-        {cards}
-      </ul>
+      <div>
+        <div>{colorRow}</div>
+        <UIIdentificationCard
+          className="app"
+          width={236}
+          viewMetadata={this.content.bind(this)}
+          color={this.state.color}
+          isEmpty={true}
+          onClick={this.onClick.bind(this)}
+        />
+      </div>
     );
   }
 }
